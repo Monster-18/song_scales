@@ -1,6 +1,6 @@
 # song_scales
 
-An application to store and retrive scales of songs.
+An application to store and retrive scale of songs.
 
 ## Getting Started
 
