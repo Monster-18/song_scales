@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+//Search Bar
+import 'package:flutter_search_bar/flutter_search_bar.dart';
+
 //DB
 import 'package:song_scales/data_base/db_pamalai.dart';
 
@@ -14,7 +17,10 @@ class Pamalai extends StatefulWidget {
 }
 
 class _PamalaiState extends State<Pamalai> {
+  SearchBar searchBar;
   DBPamalai pamalai;
+
+  String songStart;
 
   //TextEditingControllers
   TextEditingController songNoController = new TextEditingController();
@@ -22,10 +28,48 @@ class _PamalaiState extends State<Pamalai> {
   TextEditingController songScaleController = new TextEditingController();
   TextEditingController songCommentController = new TextEditingController();
 
+  //AppBar
+  AppBar buildAppBar(BuildContext context) {
+    return new AppBar(
+        title: Text('Pamalai'),
+        centerTitle: true,
+        actions: [
+          searchBar.getSearchAction(context)
+        ]
+    );
+  }
+
   @override
   void initState() {
+    //Initialize DBPamalai
     pamalai = DBPamalai.instance;
+    //Initializing SearchBar
+    searchBar = new SearchBar(
+        inBar: false,
+        buildDefaultAppBar: buildAppBar,
+        setState: setState,
+        onSubmitted: (value){
+          print('Submitted $value');
+        },
+        onChanged: onChange,
+        onCleared: emptySearch,
+        onClosed: emptySearch
+    );
+    //Initial Search
+    songStart = "";
     super.initState();
+  }
+
+  //Show all songs
+  void emptySearch(){
+    songStart = "";
+    setState(() {});
+  }
+
+  //Show songs which starts with the given letters
+  void onChange(String value){
+    songStart = value;
+    setState(() { });
   }
 
   //Reloading List
@@ -35,7 +79,7 @@ class _PamalaiState extends State<Pamalai> {
 
   //Getting data from db
   Future<List<ScaleModel>> get rows async{
-    List<ScaleModel> list= await pamalai.queryAllRows();
+    List<ScaleModel> list= await pamalai.queryAllRows(songStart);
     if(list.isEmpty){
       return [];
     }else{
@@ -264,10 +308,14 @@ class _PamalaiState extends State<Pamalai> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Pamalai'),
-        centerTitle: true,
-      ),
+      appBar: searchBar.build(context),
+      // AppBar(
+      //   title: Text('Pamalai'),
+      //   centerTitle: true,
+      //   actions: [
+      //
+      //   ],
+      // ),
       body: Container(
         child: FutureBuilder(
           future: rows,

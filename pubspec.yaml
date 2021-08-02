@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.1
   sqflite:
   path:
+  flutter_search_bar:
 
 dev_dependencies:
   flutter_test:

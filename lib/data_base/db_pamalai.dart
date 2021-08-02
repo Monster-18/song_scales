@@ -47,6 +47,7 @@ class DBPamalai{
 
   }
 
+  //Update a data
   Future<int> updateData(ScaleModel scale) async{
     Database db = await instance.database;
 
@@ -56,6 +57,7 @@ class DBPamalai{
     );
   }
 
+  //Delete a data
   Future<int> deleteData(int id) async{
     Database db = await instance.database;
 
@@ -65,15 +67,16 @@ class DBPamalai{
     );
   }
 
-  //Retrive all data
-  Future<List<ScaleModel>> queryAllRows() async{
+  //Retrive all data which starts with start
+  Future<List<ScaleModel>> queryAllRows(String start) async{
     Database db = await instance.database;
 
-    List<Map<String, dynamic>> list = await db.query('Pamalai');
+    List<Map<String, dynamic>> list = await db.query(
+        'Pamalai',
+        where: 'name like ? or comments like ?',
+        whereArgs: ["%"+start+"%", "%"+start+"%"]
+    );
 
-    if(list == null){
-
-    }
     List<ScaleModel> l = [];
 
     for(Map<String, dynamic> map in list){
