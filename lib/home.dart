@@ -30,7 +30,9 @@ class HomePage extends StatelessWidget {
                     ),
                     Button(
                       title: 'Keerthanai',
-                      callback: (){},
+                      callback: (){
+                        Navigator.pushNamed(context, '/keerthanai');
+                      },
                     ),
                   ],
                 ),

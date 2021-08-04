@@ -6,19 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 //DB
-import 'package:song_scales/data_base/db_pamalai.dart';
+import 'package:song_scales/data_base/db_keerthanai.dart';
 
 //Model
 import 'package:song_scales/model/scale_model.dart';
 
-class Pamalai extends StatefulWidget {
+class Keerthanai extends StatefulWidget {
   @override
-  _PamalaiState createState() => _PamalaiState();
+  _KeerthanaiState createState() => _KeerthanaiState();
 }
 
-class _PamalaiState extends State<Pamalai> {
+class _KeerthanaiState extends State<Keerthanai> {
   SearchBar searchBar;
-  DBPamalai pamalai;
+  DBKeerthanai keerthanai;
 
   String songStart;
 
@@ -31,7 +31,7 @@ class _PamalaiState extends State<Pamalai> {
   //AppBar
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-        title: Text('Pamalai'),
+        title: Text('Keerthanai'),
         centerTitle: true,
         actions: [
           searchBar.getSearchAction(context)
@@ -41,8 +41,8 @@ class _PamalaiState extends State<Pamalai> {
 
   @override
   void initState() {
-    //Initialize DBPamalai
-    pamalai = DBPamalai.instance;
+    //Initialize DBKeerthanai
+    keerthanai = DBKeerthanai.instance;
     //Initializing SearchBar
     searchBar = new SearchBar(
         inBar: false,
@@ -79,7 +79,7 @@ class _PamalaiState extends State<Pamalai> {
 
   //Getting data from db
   Future<List<ScaleModel>> get rows async{
-    List<ScaleModel> list= await pamalai.queryAllRows(songStart);
+    List<ScaleModel> list= await keerthanai.queryAllRows(songStart);
     if(list.isEmpty){
       return [];
     }else{
@@ -100,53 +100,53 @@ class _PamalaiState extends State<Pamalai> {
     }
 
     l.add(
-        // Container(
-        //   height: 50,
-        //   child: Card(
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //       children: [
-        //         Container(
-        //             width: 30,
-        //             child: Text(
-        //               'No.',
-        //               style: TextStyle(
-        //                 fontWeight: FontWeight.bold
-        //               ),
-        //             )
-        //         ),
-        //         Container(
-        //             width: 70,
-        //             child: Text(
-        //               'Name',
-        //               style: TextStyle(
-        //                   fontWeight: FontWeight.bold
-        //               ),
-        //             )
-        //         ),
-        //         Container(
-        //             width: 40,
-        //             child: Text(
-        //               'Scale',
-        //               style: TextStyle(
-        //                   fontWeight: FontWeight.bold
-        //               ),
-        //             )
-        //         ),
-        //         Container(
-        //             width: 100,
-        //             child: Text(
-        //               'Comments',
-        //               style: TextStyle(
-        //                   fontWeight: FontWeight.bold
-        //               ),
-        //             )
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // )
-      Cards(scale: null, callback: reload,)
+      // Container(
+      //   height: 50,
+      //   child: Card(
+      //     child: Row(
+      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //       children: [
+      //         Container(
+      //             width: 30,
+      //             child: Text(
+      //               'No.',
+      //               style: TextStyle(
+      //                 fontWeight: FontWeight.bold
+      //               ),
+      //             )
+      //         ),
+      //         Container(
+      //             width: 70,
+      //             child: Text(
+      //               'Name',
+      //               style: TextStyle(
+      //                   fontWeight: FontWeight.bold
+      //               ),
+      //             )
+      //         ),
+      //         Container(
+      //             width: 40,
+      //             child: Text(
+      //               'Scale',
+      //               style: TextStyle(
+      //                   fontWeight: FontWeight.bold
+      //               ),
+      //             )
+      //         ),
+      //         Container(
+      //             width: 100,
+      //             child: Text(
+      //               'Comments',
+      //               style: TextStyle(
+      //                   fontWeight: FontWeight.bold
+      //               ),
+      //             )
+      //         ),
+      //       ],
+      //     ),
+      //   ),
+      // )
+        Cards(scale: null, callback: reload,)
     );
     for(ScaleModel scale in list){
       l.add(
@@ -156,7 +156,7 @@ class _PamalaiState extends State<Pamalai> {
         //   ),
         //   child: GestureDetector(
         //     onLongPress: (){
-        //       //TODO
+        //
         //     },
         //     child: Card(
         //       child: Row(
@@ -183,7 +183,7 @@ class _PamalaiState extends State<Pamalai> {
         //     ),
         //   ),
         // )
-        Cards(scale: scale, callback: reload,)
+          Cards(scale: scale, callback: reload,)
       );
     }
 
@@ -217,7 +217,7 @@ class _PamalaiState extends State<Pamalai> {
             scale.scale = songScaleController.text.trim();
             scale.comments = songCommentController.text.trim();
 
-            await pamalai.insertData(scale);
+            await keerthanai.insertData(scale);
             clearAllTexts();
             Navigator.pop(context);
           }else{
@@ -276,18 +276,18 @@ class _PamalaiState extends State<Pamalai> {
         width: 300,
         height: 330,
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 10,),
-              songNo,
-              SizedBox(height: 10,),
-              songName,
-              SizedBox(height: 10,),
-              songScale,
-              SizedBox(height: 10,),
-              songComment,
-            ],
-          )
+            child: Column(
+              children: [
+                SizedBox(height: 10,),
+                songNo,
+                SizedBox(height: 10,),
+                songName,
+                SizedBox(height: 10,),
+                songScale,
+                SizedBox(height: 10,),
+                songComment,
+              ],
+            )
         ),
       ),
       actions: [
@@ -297,11 +297,11 @@ class _PamalaiState extends State<Pamalai> {
     );
 
     return showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context){
-        return alert;
-      }
+        barrierDismissible: false,
+        context: context,
+        builder: (context){
+          return alert;
+        }
     );
   }
 
@@ -309,13 +309,6 @@ class _PamalaiState extends State<Pamalai> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: searchBar.build(context),
-      // AppBar(
-      //   title: Text('Pamalai'),
-      //   centerTitle: true,
-      //   actions: [
-      //
-      //   ],
-      // ),
       body: Container(
         child: FutureBuilder(
           future: rows,
@@ -345,7 +338,7 @@ class _PamalaiState extends State<Pamalai> {
           setState(() { });
         },
         child: Icon(
-          Icons.add
+            Icons.add
         ),
       ),
     );
@@ -364,7 +357,7 @@ class Cards extends StatefulWidget {
 }
 
 class _CardsState extends State<Cards> {
-  DBPamalai pamalai;
+  DBKeerthanai keerthanai;
   bool show = false;
 
   //TextEditingControllers
@@ -377,7 +370,7 @@ class _CardsState extends State<Cards> {
 
   @override
   void initState() {
-    pamalai = DBPamalai.instance;
+    keerthanai = DBKeerthanai.instance;
     super.initState();
   }
 
@@ -397,13 +390,13 @@ class _CardsState extends State<Cards> {
     FlatButton deleteButton = new FlatButton(
       onPressed: () async{
         show = false;
-        await pamalai.deleteData(widget.scale.id);
+        await keerthanai.deleteData(widget.scale.id);
         Navigator.pop(context);
       },
       child: Text(
         'Delete',
         style: TextStyle(
-          color: Colors.red
+            color: Colors.red
         ),
       ),
     );
@@ -416,7 +409,7 @@ class _CardsState extends State<Cards> {
         child: Text(
           'Cancel',
           style: TextStyle(
-            color: Colors.blue
+              color: Colors.blue
           ),
         )
     );
@@ -427,17 +420,17 @@ class _CardsState extends State<Cards> {
         child: Text('Are You sure You want to delete the song ${widget.scale.id}?'),
       ),
       actions: [
-          deleteButton,
-          cancelButton
+        deleteButton,
+        cancelButton
       ],
     );
 
     return showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context){
+        barrierDismissible: false,
+        context: context,
+        builder: (context){
           return alert;
-      }
+        }
     );
   }
 
@@ -452,7 +445,7 @@ class _CardsState extends State<Cards> {
             scale.scale = songScaleController.text.trim();
             scale.comments = songCommentController.text.trim();
 
-            await pamalai.updateData(scale);
+            await keerthanai.updateData(scale);
             Navigator.pop(context);
           }else{
             print('Enter all Fields');
@@ -628,35 +621,35 @@ class _CardsState extends State<Cards> {
                   child: Text(widget.scale.comments)
               ),
               show?
-                  Row(
-                    children: [
-                      Container(
-                        child: IconButton(
-                          onPressed: ()async{
-                            await updateData();
-                            widget.callback();
-                          },
-                          icon: Icon(
-                            Icons.edit,
-                            color: Colors.blue,
-                          ),
-                        ),
+              Row(
+                children: [
+                  Container(
+                    child: IconButton(
+                      onPressed: ()async{
+                        await updateData();
+                        widget.callback();
+                      },
+                      icon: Icon(
+                        Icons.edit,
+                        color: Colors.blue,
                       ),
-                      Container(
-                        child: IconButton(
-                          onPressed: () async{
-                            await deleteAlert();
-                            widget.callback();
-                          },
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.red,
-                          ),
-                        ),
+                    ),
+                  ),
+                  Container(
+                    child: IconButton(
+                      onPressed: () async{
+                        await deleteAlert();
+                        widget.callback();
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red,
                       ),
-                    ],
-                  ):
-                  Container(width: 0,)
+                    ),
+                  ),
+                ],
+              ):
+              Container(width: 0,)
             ],
           ),
         ),

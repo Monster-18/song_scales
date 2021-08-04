@@ -5,10 +5,10 @@ import 'package:path/path.dart';
 import 'package:song_scales/model/scale_model.dart';
 
 
-class DBPamalai{
+class DBKeerthanai{
   //Constructor
-  DBPamalai._privateConstructor();
-  static final DBPamalai instance = DBPamalai._privateConstructor();
+  DBKeerthanai._privateConstructor();
+  static final DBKeerthanai instance = DBKeerthanai._privateConstructor();
 
   static Database _database;
   Future<Database> get database async{
@@ -22,16 +22,16 @@ class DBPamalai{
 
   //Initialize a db
   _initDatabase() async{
-    String path = join(await getDatabasesPath(), 'Pamalai.db');
+    String path = join(await getDatabasesPath(), 'Keerthanai.db');
 
     return await openDatabase(
-      path,
-      version: 1,
-      onCreate: (db, version){
-        db.execute(
-          'CREATE TABLE Pamalai(id number, name varchar2(50), scale varchar2(20), comments varchar2(60))'
-        );
-      }
+        path,
+        version: 1,
+        onCreate: (db, version){
+          db.execute(
+              'CREATE TABLE Keerthanai(id number, name varchar2(50), scale varchar2(20), comments varchar2(60))'
+          );
+        }
     );
   }
 
@@ -40,8 +40,8 @@ class DBPamalai{
     Database db = await instance.database;
 
     await db.execute(
-      'INSERT INTO Pamalai VALUES(?, ?, ?, ?)',
-      [scale.id, scale.name, scale.scale, scale.comments]
+        'INSERT INTO Keerthanai VALUES(?, ?, ?, ?)',
+        [scale.id, scale.name, scale.scale, scale.comments]
     );
 
   }
@@ -51,7 +51,7 @@ class DBPamalai{
     Database db = await instance.database;
 
     await db.execute(
-        'UPDATE Pamalai SET name = ?, scale = ?, comments = ? WHERE id = ?',
+        'UPDATE Keerthanai SET name = ?, scale = ?, comments = ? WHERE id = ?',
         [scale.name, scale.scale, scale.comments, scale.id]
     );
   }
@@ -61,8 +61,8 @@ class DBPamalai{
     Database db = await instance.database;
 
     await db.execute(
-      'DELETE FROM Pamalai where id = ?',
-      [id]
+        'DELETE FROM Keerthanai where id = ?',
+        [id]
     );
   }
 
@@ -71,7 +71,7 @@ class DBPamalai{
     Database db = await instance.database;
 
     List<Map<String, dynamic>> list = await db.query(
-        'Pamalai',
+        'Keerthanai',
         where: 'name like ? or comments like ?',
         whereArgs: ["%"+start+"%", "%"+start+"%"]
     );
