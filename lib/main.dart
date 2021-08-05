@@ -6,6 +6,7 @@ import 'package:song_scales/pages/pamalai.dart';
 import 'package:song_scales/pages/keerthanai.dart';
 import 'package:song_scales/pages/fv1.dart';
 import 'package:song_scales/pages/fv2.dart';
+import 'package:song_scales/pages/fv3.dart';
 
 void main() {
   runApp(
@@ -21,6 +22,7 @@ void main() {
         '/keerthanai': (context) => Keerthanai(),
         '/fv1': (context) => Fv1(),
         '/fv2': (context) => Fv2(),
+        '/fv3': (context) => Fv3(),
       },
     )
   );

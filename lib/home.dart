@@ -63,7 +63,9 @@ class HomePage extends StatelessWidget {
                     RenameButton(
                       title: Details.fv3,
                       num: 3,
-                      callback: (){},
+                      callback: (){
+                        Navigator.pushNamed(context, '/fv3');
+                      },
                     ),
                     RenameButton(
                       title: Details.fv4,
