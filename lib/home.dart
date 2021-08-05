@@ -3,7 +3,40 @@ import 'package:flutter/material.dart';
 //Details
 import 'package:song_scales/data/details.dart';
 
-class HomePage extends StatelessWidget {
+//Shared Preference
+import 'package:shared_preferences/shared_preferences.dart';
+
+class HomePage extends StatefulWidget {
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  SharedPreferences preferences;
+
+  @override
+  void initState(){
+    _getDataFromSharedPreference();
+    super.initState();
+  }
+
+  _getDataFromSharedPreference() async{
+    preferences = await SharedPreferences.getInstance();
+
+    if(preferences.containsKey('fv1')){
+      Details.fv1 = preferences.getString('fv1');
+    }
+    if(preferences.containsKey('fv2')){
+      Details.fv2 = preferences.getString('fv2');
+    }
+    if(preferences.containsKey('fv3')){
+      Details.fv3 = preferences.getString('fv3');
+    }
+    if(preferences.containsKey('fv4')){
+      Details.fv4 = preferences.getString('fv4');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,6 +203,7 @@ class RenameButton extends StatefulWidget {
 }
 
 class _RenameButtonState extends State<RenameButton> {
+  SharedPreferences _sharedPreferences;
 
   bool onPressed = false;
   TextEditingController renameController = new TextEditingController();
@@ -180,7 +214,7 @@ class _RenameButtonState extends State<RenameButton> {
 
     FlatButton okButton = FlatButton(
       onPressed: (){
-        if(renameController.text.isNotEmpty){
+        if(renameController.text.trim().isNotEmpty){
           rename = true;
           Navigator.pop(context);
         }
@@ -281,16 +315,21 @@ class _RenameButtonState extends State<RenameButton> {
               child: InkWell(
                 onTap: () async{
                   await alertBox(context);
+                  _sharedPreferences = await SharedPreferences.getInstance();
                   if(rename){
                     rename = false;
                     switch(widget.num){
-                      case 1: Details.fv1 = renameController.text;
+                      case 1: Details.fv1 = renameController.text.trim();
+                              await _sharedPreferences.setString('fv1', Details.fv1);
                               break;
-                      case 2: Details.fv2 = renameController.text;
+                      case 2: Details.fv2 = renameController.text.trim();
+                              await _sharedPreferences.setString('fv2', Details.fv2);
                               break;
-                      case 3: Details.fv3 = renameController.text;
+                      case 3: Details.fv3 = renameController.text.trim();
+                              await _sharedPreferences.setString('fv3', Details.fv3);
                               break;
-                      case 4: Details.fv4 = renameController.text;
+                      case 4: Details.fv4 = renameController.text.trim();
+                              await _sharedPreferences.setString('fv4', Details.fv4);
                               break;
                     }
                     widget.title = renameController.text;
