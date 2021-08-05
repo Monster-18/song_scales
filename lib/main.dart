@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:song_scales/home.dart';
 import 'package:song_scales/pages/pamalai.dart';
 import 'package:song_scales/pages/keerthanai.dart';
+import 'package:song_scales/pages/fv1.dart';
 
 void main() {
   runApp(
@@ -17,6 +18,7 @@ void main() {
         '/': (context) => HomePage(),
         '/pamalai': (context) => Pamalai(),
         '/keerthanai': (context) => Keerthanai(),
+        '/fv1': (context) => Fv1(),
       },
     )
   );

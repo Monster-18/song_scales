@@ -22,14 +22,14 @@ class DBFv1{
 
   //Initialize a db
   _initDatabase() async{
-    String path = join(await getDatabasesPath(), 'Keerthanai.db');
+    String path = join(await getDatabasesPath(), 'Fv1.db');
 
     return await openDatabase(
         path,
         version: 1,
         onCreate: (db, version){
           db.execute(
-              'CREATE TABLE Keerthanai(id number, name varchar2(50), scale varchar2(20), comments varchar2(60))'
+              'CREATE TABLE Fv1(id number, name varchar2(50), scale varchar2(20), comments varchar2(60))'
           );
         }
     );
@@ -40,7 +40,7 @@ class DBFv1{
     Database db = await instance.database;
 
     await db.execute(
-        'INSERT INTO Keerthanai VALUES(?, ?, ?, ?)',
+        'INSERT INTO Fv1 VALUES(?, ?, ?, ?)',
         [scale.id, scale.name, scale.scale, scale.comments]
     );
 
@@ -51,7 +51,7 @@ class DBFv1{
     Database db = await instance.database;
 
     await db.execute(
-        'UPDATE Keerthanai SET name = ?, scale = ?, comments = ? WHERE id = ?',
+        'UPDATE Fv1 SET name = ?, scale = ?, comments = ? WHERE id = ?',
         [scale.name, scale.scale, scale.comments, scale.id]
     );
   }
@@ -61,7 +61,7 @@ class DBFv1{
     Database db = await instance.database;
 
     await db.execute(
-        'DELETE FROM Keerthanai where id = ?',
+        'DELETE FROM Fv1 where id = ?',
         [id]
     );
   }
@@ -71,7 +71,7 @@ class DBFv1{
     Database db = await instance.database;
 
     List<Map<String, dynamic>> list = await db.query(
-        'Keerthanai',
+        'Fv1',
         where: 'name like ? or comments like ?',
         whereArgs: ["%"+start+"%", "%"+start+"%"]
     );

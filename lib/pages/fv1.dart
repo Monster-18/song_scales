@@ -6,19 +6,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 //DB
-import 'package:song_scales/data_base/db_keerthanai.dart';
+import 'package:song_scales/data_base/db_fv1.dart';
 
 //Model
 import 'package:song_scales/model/scale_model.dart';
 
-class Keerthanai extends StatefulWidget {
+//Details
+import  'package:song_scales/data/details.dart';
+
+class Fv1 extends StatefulWidget {
   @override
-  _KeerthanaiState createState() => _KeerthanaiState();
+  _Fv1State createState() => _Fv1State();
 }
 
-class _KeerthanaiState extends State<Keerthanai> {
+class _Fv1State extends State<Fv1> {
   SearchBar searchBar;
-  DBFv1 keerthanai;
+  DBFv1 fv1;
 
   String songStart;
 
@@ -31,7 +34,7 @@ class _KeerthanaiState extends State<Keerthanai> {
   //AppBar
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-        title: Text('Keerthanai'),
+        title: Text(Details.fv1),
         centerTitle: true,
         actions: [
           searchBar.getSearchAction(context)
@@ -41,8 +44,8 @@ class _KeerthanaiState extends State<Keerthanai> {
 
   @override
   void initState() {
-    //Initialize DBKeerthanai
-    keerthanai = DBFv1.instance;
+    //Initialize DBFv1
+    fv1 = DBFv1.instance;
     //Initializing SearchBar
     searchBar = new SearchBar(
         inBar: false,
@@ -79,7 +82,7 @@ class _KeerthanaiState extends State<Keerthanai> {
 
   //Getting data from db
   Future<List<ScaleModel>> get rows async{
-    List<ScaleModel> list= await keerthanai.queryAllRows(songStart);
+    List<ScaleModel> list= await fv1.queryAllRows(songStart);
     if(list.isEmpty){
       return [];
     }else{
@@ -100,52 +103,6 @@ class _KeerthanaiState extends State<Keerthanai> {
     }
 
     l.add(
-      // Container(
-      //   height: 50,
-      //   child: Card(
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //       children: [
-      //         Container(
-      //             width: 30,
-      //             child: Text(
-      //               'No.',
-      //               style: TextStyle(
-      //                 fontWeight: FontWeight.bold
-      //               ),
-      //             )
-      //         ),
-      //         Container(
-      //             width: 70,
-      //             child: Text(
-      //               'Name',
-      //               style: TextStyle(
-      //                   fontWeight: FontWeight.bold
-      //               ),
-      //             )
-      //         ),
-      //         Container(
-      //             width: 40,
-      //             child: Text(
-      //               'Scale',
-      //               style: TextStyle(
-      //                   fontWeight: FontWeight.bold
-      //               ),
-      //             )
-      //         ),
-      //         Container(
-      //             width: 100,
-      //             child: Text(
-      //               'Comments',
-      //               style: TextStyle(
-      //                   fontWeight: FontWeight.bold
-      //               ),
-      //             )
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // )
         Cards(scale: null, callback: reload,)
     );
     for(ScaleModel scale in list){
@@ -217,7 +174,7 @@ class _KeerthanaiState extends State<Keerthanai> {
             scale.scale = songScaleController.text.trim();
             scale.comments = songCommentController.text.trim();
 
-            await keerthanai.insertData(scale);
+            await fv1.insertData(scale);
             clearAllTexts();
             Navigator.pop(context);
           }else{
@@ -357,7 +314,7 @@ class Cards extends StatefulWidget {
 }
 
 class _CardsState extends State<Cards> {
-  DBFv1 keerthanai;
+  DBFv1 fv1;
   bool show = false;
 
   //TextEditingControllers
@@ -370,7 +327,7 @@ class _CardsState extends State<Cards> {
 
   @override
   void initState() {
-    keerthanai = DBFv1.instance;
+    fv1 = DBFv1.instance;
     super.initState();
   }
 
@@ -390,7 +347,7 @@ class _CardsState extends State<Cards> {
     FlatButton deleteButton = new FlatButton(
       onPressed: () async{
         show = false;
-        await keerthanai.deleteData(widget.scale.id);
+        await fv1.deleteData(widget.scale.id);
         Navigator.pop(context);
       },
       child: Text(
@@ -445,7 +402,7 @@ class _CardsState extends State<Cards> {
             scale.scale = songScaleController.text.trim();
             scale.comments = songCommentController.text.trim();
 
-            await keerthanai.updateData(scale);
+            await fv1.updateData(scale);
             Navigator.pop(context);
           }else{
             print('Enter all Fields');
