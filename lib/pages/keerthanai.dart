@@ -11,6 +11,9 @@ import 'package:song_scales/data_base/db_keerthanai.dart';
 //Model
 import 'package:song_scales/model/scale_model.dart';
 
+//Details
+import  'package:song_scales/data/details.dart';
+
 class Keerthanai extends StatefulWidget {
   @override
   _KeerthanaiState createState() => _KeerthanaiState();
@@ -93,6 +96,7 @@ class _KeerthanaiState extends State<Keerthanai> {
 
     if(list.isEmpty){
       return Container(
+        height: Details.height,
         child: Center(
           child: Text('No data'),
         ),
@@ -100,89 +104,10 @@ class _KeerthanaiState extends State<Keerthanai> {
     }
 
     l.add(
-      // Container(
-      //   height: 50,
-      //   child: Card(
-      //     child: Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //       children: [
-      //         Container(
-      //             width: 30,
-      //             child: Text(
-      //               'No.',
-      //               style: TextStyle(
-      //                 fontWeight: FontWeight.bold
-      //               ),
-      //             )
-      //         ),
-      //         Container(
-      //             width: 70,
-      //             child: Text(
-      //               'Name',
-      //               style: TextStyle(
-      //                   fontWeight: FontWeight.bold
-      //               ),
-      //             )
-      //         ),
-      //         Container(
-      //             width: 40,
-      //             child: Text(
-      //               'Scale',
-      //               style: TextStyle(
-      //                   fontWeight: FontWeight.bold
-      //               ),
-      //             )
-      //         ),
-      //         Container(
-      //             width: 100,
-      //             child: Text(
-      //               'Comments',
-      //               style: TextStyle(
-      //                   fontWeight: FontWeight.bold
-      //               ),
-      //             )
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // )
         Cards(scale: null, callback: reload,)
     );
     for(ScaleModel scale in list){
       l.add(
-        // Container(
-        //   constraints: BoxConstraints(
-        //     minHeight: 50,
-        //   ),
-        //   child: GestureDetector(
-        //     onLongPress: (){
-        //
-        //     },
-        //     child: Card(
-        //       child: Row(
-        //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //         children: [
-        //           Container(
-        //             width: 30,
-        //               child: Text('${scale.id}')
-        //           ),
-        //           Container(
-        //             width: 70,
-        //               child: Text(scale.name)
-        //           ),
-        //           Container(
-        //             width: 40,
-        //               child: Text(scale.scale)
-        //           ),
-        //           Container(
-        //             width: 100,
-        //               child: Text(scale.comments)
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // )
           Cards(scale: scale, callback: reload,)
       );
     }
@@ -309,27 +234,39 @@ class _KeerthanaiState extends State<Keerthanai> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: searchBar.build(context),
-      body: Container(
-        child: FutureBuilder(
-          future: rows,
-          builder: (context, snapshot){
-            switch(snapshot.connectionState){
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-              case ConnectionState.active:
-                return Center(child: CircularProgressIndicator());
-                break;
-              case ConnectionState.done:
-                if(snapshot.hasData){
-                  return listBody(snapshot.data);
-                }else if(snapshot.hasError){
-                  return Text('Error');
-                }else{
-                  return Text('No Data');
-                }
-            }
-            return Text('No Data');//No need
-          },
+      body: SingleChildScrollView(
+        child: Container(
+          child: FutureBuilder(
+            future: rows,
+            builder: (context, snapshot){
+              switch(snapshot.connectionState){
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                case ConnectionState.active:
+                  return Container(
+                      height: Details.height,
+                      child: Center(
+                          child: CircularProgressIndicator()
+                      )
+                  );
+                  break;
+                case ConnectionState.done:
+                  if(snapshot.hasData){
+                    return listBody(snapshot.data);
+                  }else if(snapshot.hasError){
+                    return Text('Error');
+                  }else{
+                    return Container(
+                      height: Details.height,
+                      child: Center(
+                        child: Text('No data'),
+                      ),
+                    );
+                  }
+              }
+              return Text('No Data');//No need
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

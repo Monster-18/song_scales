@@ -96,6 +96,7 @@ class _Fv1State extends State<Fv1> {
 
     if(list.isEmpty){
       return Container(
+        height: Details.height,
         child: Center(
           child: Text('No data'),
         ),
@@ -107,39 +108,6 @@ class _Fv1State extends State<Fv1> {
     );
     for(ScaleModel scale in list){
       l.add(
-        // Container(
-        //   constraints: BoxConstraints(
-        //     minHeight: 50,
-        //   ),
-        //   child: GestureDetector(
-        //     onLongPress: (){
-        //
-        //     },
-        //     child: Card(
-        //       child: Row(
-        //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //         children: [
-        //           Container(
-        //             width: 30,
-        //               child: Text('${scale.id}')
-        //           ),
-        //           Container(
-        //             width: 70,
-        //               child: Text(scale.name)
-        //           ),
-        //           Container(
-        //             width: 40,
-        //               child: Text(scale.scale)
-        //           ),
-        //           Container(
-        //             width: 100,
-        //               child: Text(scale.comments)
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // )
           Cards(scale: scale, callback: reload,)
       );
     }
@@ -266,27 +234,44 @@ class _Fv1State extends State<Fv1> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: searchBar.build(context),
-      body: Container(
-        child: FutureBuilder(
-          future: rows,
-          builder: (context, snapshot){
-            switch(snapshot.connectionState){
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-              case ConnectionState.active:
-                return Center(child: CircularProgressIndicator());
-                break;
-              case ConnectionState.done:
-                if(snapshot.hasData){
-                  return listBody(snapshot.data);
-                }else if(snapshot.hasError){
-                  return Text('Error');
-                }else{
-                  return Text('No Data');
-                }
-            }
-            return Text('No Data');//No need
-          },
+      body: SingleChildScrollView(
+        child: Container(
+          // constraints: BoxConstraints(
+          //   minHeight: MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom
+          // ),
+          child: FutureBuilder(
+            future: rows,
+            builder: (context, snapshot){
+              switch(snapshot.connectionState){
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                case ConnectionState.active:
+                  return Container(
+                      height: Details.height,
+                      child: Center(
+                          child: CircularProgressIndicator()
+                      )
+                  );
+                  break;
+                case ConnectionState.done:
+                  if(snapshot.hasData){
+                    return listBody(snapshot.data);
+                  }else if(snapshot.hasError){
+                    return Text('Error');
+                  }else{
+                    return Container(
+                        height: Details.height,
+                        child: Text('No Data')
+                    );
+                  }
+                  break;
+                default: return Container(
+                    height: Details.height,
+                    child: Text('No Data')
+                );
+              }
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

@@ -11,6 +11,9 @@ import 'package:song_scales/data_base/db_pamalai.dart';
 //Model
 import 'package:song_scales/model/scale_model.dart';
 
+//Details
+import  'package:song_scales/data/details.dart';
+
 class Pamalai extends StatefulWidget {
   @override
   _PamalaiState createState() => _PamalaiState();
@@ -93,6 +96,7 @@ class _PamalaiState extends State<Pamalai> {
 
     if(list.isEmpty){
       return Container(
+        height: Details.height,
         child: Center(
           child: Text('No data'),
         ),
@@ -316,27 +320,42 @@ class _PamalaiState extends State<Pamalai> {
       //
       //   ],
       // ),
-      body: Container(
-        child: FutureBuilder(
-          future: rows,
-          builder: (context, snapshot){
-            switch(snapshot.connectionState){
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-              case ConnectionState.active:
-                return Center(child: CircularProgressIndicator());
-                break;
-              case ConnectionState.done:
-                if(snapshot.hasData){
-                  return listBody(snapshot.data);
-                }else if(snapshot.hasError){
-                  return Text('Error');
-                }else{
-                  return Text('No Data');
-                }
-            }
-            return Text('No Data');//No need
-          },
+      body: SingleChildScrollView(
+        child: Container(
+          child: FutureBuilder(
+            future: rows,
+            builder: (context, snapshot){
+              switch(snapshot.connectionState){
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                case ConnectionState.active:
+                  return Container(
+                      height: Details.height,
+                      child: Center(
+                          child: CircularProgressIndicator()
+                      )
+                  );
+                  break;
+                case ConnectionState.done:
+                  if(snapshot.hasData){
+                    return listBody(snapshot.data);
+                  }else if(snapshot.hasError){
+                    return Container(
+                      height: Details.height,
+                        child: Text('Error')
+                    );
+                  }else{
+                    return Container(
+                      height: Details.height,
+                      child: Center(
+                        child: Text('No data'),
+                      ),
+                    );
+                  }
+              }
+              return Text('No Data');//No need
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

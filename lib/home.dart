@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:song_scales/data/details.dart';
 
 class HomePage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    if(Details.height == 0){
+      Details.height = MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top - MediaQuery.of(context).padding.bottom;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
