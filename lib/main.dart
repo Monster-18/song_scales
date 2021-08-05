@@ -7,6 +7,7 @@ import 'package:song_scales/pages/keerthanai.dart';
 import 'package:song_scales/pages/fv1.dart';
 import 'package:song_scales/pages/fv2.dart';
 import 'package:song_scales/pages/fv3.dart';
+import 'package:song_scales/pages/fv4.dart';
 
 void main() {
   runApp(
@@ -23,6 +24,7 @@ void main() {
         '/fv1': (context) => Fv1(),
         '/fv2': (context) => Fv2(),
         '/fv3': (context) => Fv3(),
+        '/fv4': (context) => Fv4(),
       },
     )
   );
