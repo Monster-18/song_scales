@@ -73,7 +73,8 @@ class DBPamalai{
     List<Map<String, dynamic>> list = await db.query(
         'Pamalai',
         where: 'name like ? or comments like ?',
-        whereArgs: ["%"+start+"%", "%"+start+"%"]
+        whereArgs: ["%"+start+"%", "%"+start+"%"],
+        orderBy: 'id'
     );
 
     List<ScaleModel> l = [];

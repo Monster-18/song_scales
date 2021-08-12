@@ -5,10 +5,10 @@ import 'package:path/path.dart';
 import 'package:song_scales/model/scale_model.dart';
 
 
-class DBFv1{
+class DBKeerthanai{
   //Constructor
-  DBFv1._privateConstructor();
-  static final DBFv1 instance = DBFv1._privateConstructor();
+  DBKeerthanai._privateConstructor();
+  static final DBKeerthanai instance = DBKeerthanai._privateConstructor();
 
   static Database _database;
   Future<Database> get database async{
@@ -73,7 +73,8 @@ class DBFv1{
     List<Map<String, dynamic>> list = await db.query(
         'Keerthanai',
         where: 'name like ? or comments like ?',
-        whereArgs: ["%"+start+"%", "%"+start+"%"]
+        whereArgs: ["%"+start+"%", "%"+start+"%"],
+        orderBy: 'id'
     );
 
     List<ScaleModel> l = [];

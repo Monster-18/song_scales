@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+//Splash Screen
+import 'package:song_scales/splash_screen.dart';
+
 //Pages
 import 'package:song_scales/home.dart';
 import 'package:song_scales/pages/pamalai.dart';
@@ -19,7 +22,8 @@ void main() {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(),
+        '/': (context) => SplashScreen(),
+        '/home': (context) => HomePage(),
         '/pamalai': (context) => Pamalai(),
         '/keerthanai': (context) => Keerthanai(),
         '/fv1': (context) => Fv1(),

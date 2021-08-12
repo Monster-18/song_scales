@@ -73,7 +73,8 @@ class DBFv2{
     List<Map<String, dynamic>> list = await db.query(
         'Fv2',
         where: 'name like ? or comments like ?',
-        whereArgs: ["%"+start+"%", "%"+start+"%"]
+        whereArgs: ["%"+start+"%", "%"+start+"%"],
+        orderBy: 'id'
     );
 
     List<ScaleModel> l = [];
