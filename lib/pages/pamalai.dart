@@ -23,6 +23,9 @@ class _PamalaiState extends State<Pamalai> {
 
   @override
   Widget build(BuildContext context) {
-    return Song(db: pamalai, title: 'Pamalai',);
+    return Song(
+      db: pamalai,
+      title: 'Pamalai',
+    );
   }
 }

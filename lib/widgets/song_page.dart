@@ -66,14 +66,16 @@ class _SongState extends State<Song> {
 
   //Show all songs
   void emptySearch(){
-    songStart = "";
-    setState(() {});
+    setState(() {
+      songStart = "";
+    });
   }
 
   //Show songs which starts with the given letters
   void onChange(String value){
-    songStart = value.trim();
-    setState(() { });
+    setState(() {
+      songStart = value.trim();
+    });
   }
 
   //Reloading List

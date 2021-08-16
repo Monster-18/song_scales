@@ -29,8 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     });
 
-    _start = new Timer(Duration(seconds: 3), (){
-      Navigator.pushNamed(context, '/home');
+    _start = new Timer(Duration(seconds: 2), (){
+      Navigator.pushReplacementNamed(context, '/home');
     });
 
     super.initState();
@@ -68,11 +68,14 @@ class _SplashScreenState extends State<SplashScreen> {
       color: Colors.white,
       child: Center(
         child: AnimatedContainer(
-          duration: Duration(seconds: 3),
+          duration: Duration(milliseconds: 2500),
           width: (start)? 300: 10,
           height: (start)? 300: 10,
           curve: Curves.easeIn,
-          child: FlutterLogo(),
+          child: Image(
+            image: AssetImage('assets/icon/logo.png'),
+          )
+          //FlutterLogo(),
         ),
       ),
     );

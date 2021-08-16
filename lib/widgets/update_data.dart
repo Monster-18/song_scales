@@ -20,7 +20,7 @@ class _UpdateDataState extends State<UpdateData> {
   dynamic db;
 
   //List of Scales
-  List<String> scaleList = ['C', 'D', 'E', 'C#'];
+  List<String> scaleList;
   String selectedScale;
 
   //TextEditingControllers
@@ -95,7 +95,6 @@ class _UpdateDataState extends State<UpdateData> {
       isExpanded: true,
       value: selectedScale,
       onChanged: (String val){
-
         setState(() {
           selectedScale = val;
         });
@@ -120,8 +119,8 @@ class _UpdateDataState extends State<UpdateData> {
     AlertDialog alert = new AlertDialog(
       title: Text('Update Song'),
       content: Container(
-        width: 300,
-        height: 330,
+        width: MediaQuery.of(context).size.width*0.75,  //3/4th
+        height: MediaQuery.of(context).size.height*0.40,
         child: SingleChildScrollView(
             child: Column(
               children: [
@@ -130,7 +129,7 @@ class _UpdateDataState extends State<UpdateData> {
                 SizedBox(height: 10,),
                 songName,
                 SizedBox(height: 10,),
-                songScale,
+                Container(height: 50, child: songScale),
                 SizedBox(height: 10,),
                 songComment,
               ],

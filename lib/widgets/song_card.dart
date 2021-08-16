@@ -133,30 +133,39 @@ class _CardsState extends State<Cards> {
   Widget build(BuildContext context) {
     if(widget.scale == null){
       return Container(
-        height: 50,
+        height: 60,
         child: Card(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(),
-              Container(
-                  width: 30,
-                  child: headText('No.'),
-              ),
-              Container(
-                  width: 70,
-                  child: headText('Name'),
-              ),
-              Container(
-                  width: 40,
-                  child: headText('Scale'),
-              ),
-              Container(
-                  width: 100,
-                  child: headText('Comments'),
-              ),
-              Container(),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                      child: headText('No.'),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                      child: headText('Name'),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                      child: headText('Scale'),
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                      child: headText('Comments'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
@@ -169,66 +178,79 @@ class _CardsState extends State<Cards> {
       ),
       child: GestureDetector(
         onLongPress: (){
-          show = true;
-          setState(() { });
+          setState(() {
+            show = true;
+          });
           timer = new Timer(Duration(seconds: 10), (){
-            show = false;
-            setState(() { });
+            setState(() {
+              show = false;
+            });
           });
         },
         child: Card(
           color: (show)? Colors.yellow: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(),
-              Container(
-                  width: 30,
-                  child: bodyText('${widget.scale.id}', false),
-              ),
-              Container(
-                  width: 70,
-                  child: bodyText(widget.scale.name, false)
-              ),
-              Container(
-                  width: 40,
-                  child: bodyText(widget.scale.scale, true)
-              ),
-              Container(
-                  width: 100,
-                  child: bodyText(widget.scale.comments, false)
-              ),
-              show?
-              Row(
-                children: [
-                  Container(
-                    child: IconButton(
-                      onPressed: ()async{
-                        await updateData();
-                        widget.callback();
-                      },
-                      icon: Icon(
-                        Icons.edit,
-                        color: Colors.blue,
+          child: Padding(
+            padding: (show)? EdgeInsets.all(1.0): const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    padding: EdgeInsets.only(left: (show)? 5: 0.0),
+                      child: bodyText('${widget.scale.id}', false),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                      child: bodyText(widget.scale.name, false)
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                      child: bodyText(widget.scale.scale, true)
+                  ),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                      child: bodyText(widget.scale.comments, false)
+                  ),
+                ),
+                show?
+                Row(
+                  children: [
+                    Container(
+                      child: IconButton(
+                        onPressed: ()async{
+                          await updateData();
+                          widget.callback();
+                        },
+                        icon: Icon(
+                          Icons.edit,
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    child: IconButton(
-                      onPressed: () async{
-                        await deleteAlert();
-                        widget.callback();
-                      },
-                      icon: Icon(
-                        Icons.delete,
-                        color: Colors.red,
+                    Container(
+                      child: IconButton(
+                        onPressed: () async{
+                          await deleteAlert();
+                          widget.callback();
+                        },
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ):
-              Container()
-            ],
+                  ],
+                ):
+                Expanded(flex: 0, child: Container())
+              ],
+            ),
           ),
         ),
       ),

@@ -96,8 +96,9 @@ class _AddDataState extends State<AddData> {
       isExpanded: true,
       value: selectedScale,
       onChanged: (String val){
-        selectedScale = val;
-        setState(() { });
+        setState(() {
+          selectedScale = val;
+        });
       },
       items: scaleList.map((String value){
         return new DropdownMenuItem<String>(
@@ -120,10 +121,11 @@ class _AddDataState extends State<AddData> {
     AlertDialog alert = new AlertDialog(
       title: Text('Add Song'),
       content: Container(
-        width: 300,
-        height: 330,
+        width: MediaQuery.of(context).size.width*0.75,  //3/4th
+        height: MediaQuery.of(context).size.height*0.40,
         child: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(height: 10,),
                 songNo,

@@ -26,6 +26,9 @@ class _Fv3State extends State<Fv3> {
 
   @override
   Widget build(BuildContext context) {
-    return Song(db: fv3, title: Details.fv3,);
+    return Song(
+      db: fv3,
+      title: Details.fv3,
+    );
   }
 }
