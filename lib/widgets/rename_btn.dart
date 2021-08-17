@@ -6,10 +6,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 //Details
 import 'package:song_scales/data/details.dart';
 
+import 'package:song_scales/widgets/rename_alert.dart';
+
 class RenameButton extends StatefulWidget {
   String title;
   final VoidCallback callback;
   final int num;
+
+  static bool rename = false;
+  static TextEditingController renameController = new TextEditingController();
 
   RenameButton({this.title, this.num, this.callback});
 
@@ -21,50 +26,15 @@ class _RenameButtonState extends State<RenameButton> {
   SharedPreferences _sharedPreferences;
 
   bool onPressed = false;
-  TextEditingController renameController = new TextEditingController();
-  bool rename = false;
 
   //Alert box
   Future<void> alertBox(BuildContext context){
-
-    FlatButton okButton = FlatButton(
-      onPressed: (){
-        if(renameController.text.trim().isNotEmpty){
-          rename = true;
-          Navigator.pop(context);
-        }
-      },
-      child: Text("Ok"),
-    );
-
-    FlatButton cancelButton = FlatButton(
-      onPressed: (){
-        Navigator.pop(context);
-      },
-      child: Text("Cancel"),
-    );
-
-    TextField text = TextField(
-      controller: renameController,
-      decoration: InputDecoration(
-        hintText: 'Enter text',
-      ),
-    );
-
-    AlertDialog alert = AlertDialog(
-      title: Text('Rename File'),
-      content: text,
-      actions: [
-        okButton,
-        cancelButton
-      ],
-    );
 
     return showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context){
-          return alert;
+          return RenameAlert();
         }
     );
   }
@@ -129,27 +99,27 @@ class _RenameButtonState extends State<RenameButton> {
               onTap: () async{
                 await alertBox(context);
                 _sharedPreferences = await SharedPreferences.getInstance();
-                if(rename){
-                  rename = false;
+                if(RenameButton.rename){
+                  RenameButton.rename = false;
                   switch(widget.num){
-                    case 1: Details.fv1 = renameController.text.trim();
+                    case 1: Details.fv1 = RenameButton.renameController.text.trim();
                     await _sharedPreferences.setString('fv1', Details.fv1);
                     break;
-                    case 2: Details.fv2 = renameController.text.trim();
+                    case 2: Details.fv2 = RenameButton.renameController.text.trim();
                     await _sharedPreferences.setString('fv2', Details.fv2);
                     break;
-                    case 3: Details.fv3 = renameController.text.trim();
+                    case 3: Details.fv3 = RenameButton.renameController.text.trim();
                     await _sharedPreferences.setString('fv3', Details.fv3);
                     break;
-                    case 4: Details.fv4 = renameController.text.trim();
+                    case 4: Details.fv4 = RenameButton.renameController.text.trim();
                     await _sharedPreferences.setString('fv4', Details.fv4);
                     break;
                   }
                   setState(() {
-                    widget.title = renameController.text;
+                    widget.title = RenameButton.renameController.text;
                   });
                 }
-                renameController.clear();
+                RenameButton.renameController.clear();
               },
               splashColor: Colors.grey,
               child: Icon(Icons.edit),

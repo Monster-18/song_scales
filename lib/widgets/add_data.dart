@@ -18,6 +18,10 @@ class AddData extends StatefulWidget {
 class _AddDataState extends State<AddData> {
   dynamic db;
 
+  //Error Handling
+  bool error_number = false, error_name = false, error_comment = false;
+  String error_txt = null;
+
   //List of Scales
   List<String> scaleList;
   String selectedScale = 'C';
@@ -34,9 +38,29 @@ class _AddDataState extends State<AddData> {
     songCommentController.clear();
   }
 
+  void resetBooleanValues(){
+    error_number = false;
+    error_name = false;
+    error_comment = false;
+  }
+
   //Check whether any textfield is empty or not
   bool checkControllerIsNotEmpty(){
-    return songNoController.text.trim() != '' && songNameController.text.trim() != '' && songCommentController.text.trim() != '';
+    bool res = true;
+    if(songNoController.text.trim() == ''){
+      res = false;
+      error_number = true;
+    }
+    if(songNameController.text.trim() == ''){
+      res = false;
+      error_name = true;
+    }
+    if(songCommentController.text.trim() == ''){
+      res = false;
+      error_comment = true;
+    }
+
+    return res;
   }
 
   @override
@@ -50,6 +74,7 @@ class _AddDataState extends State<AddData> {
   Widget build(BuildContext context) {
     FlatButton addButton = new FlatButton(
         onPressed: () async{
+          resetBooleanValues();
           if(checkControllerIsNotEmpty()){
             ScaleModel scale = new ScaleModel();
             scale.id = int.parse(songNoController.text.trim());
@@ -57,12 +82,20 @@ class _AddDataState extends State<AddData> {
             scale.scale = selectedScale;
             scale.comments = songCommentController.text.trim();
 
-            await db.insertData(scale);
-            clearAllTexts();
-            Navigator.pop(context);
+            bool flag = await db.insertData(scale);
+
+            if(flag){
+              clearAllTexts();
+              Navigator.pop(context);
+            }else{
+              error_number = true;
+              error_txt = "Song Number already exist";
+            }
           }else{
+            error_txt = "Should not be empty";
             print('Enter all Fields');
           }
+          setState(() { });
         },
         child: Text('Add')
     );
@@ -81,6 +114,7 @@ class _AddDataState extends State<AddData> {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Number',
+        errorText: (error_number)? error_txt: null,
       ),
     );
 
@@ -89,6 +123,7 @@ class _AddDataState extends State<AddData> {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Name',
+        errorText: (error_name)? error_txt: null,
       ),
     );
 
@@ -115,6 +150,7 @@ class _AddDataState extends State<AddData> {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Comment',
+        errorText: (error_comment)? error_txt: null,
       ),
     );
 

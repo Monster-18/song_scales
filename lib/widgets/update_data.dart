@@ -19,6 +19,10 @@ class UpdateData extends StatefulWidget {
 class _UpdateDataState extends State<UpdateData> {
   dynamic db;
 
+  //Error Handling
+  bool error_name = false, error_comment = false;
+  String error_txt = null;
+
   //List of Scales
   List<String> scaleList;
   String selectedScale;
@@ -30,7 +34,22 @@ class _UpdateDataState extends State<UpdateData> {
 
   //Check whether any textfield is empty or not
   bool checkControllerIsNotEmpty(){
-    return songNameController.text.trim() != '' && songCommentController.text.trim() != '';
+    bool res = true;
+    if(songNameController.text.trim() == ''){
+      res = false;
+      error_name = true;
+    }
+    if(songCommentController.text.trim() == ''){
+      res = false;
+      error_comment = true;
+    }
+
+    return res;
+  }
+
+  void resetBooleanValues(){
+    error_name = false;
+    error_comment = false;
   }
 
   @override
@@ -51,6 +70,7 @@ class _UpdateDataState extends State<UpdateData> {
   Widget build(BuildContext context) {
     FlatButton updateButton = new FlatButton(
         onPressed: () async{
+          resetBooleanValues();
           if(checkControllerIsNotEmpty()){
             ScaleModel scale = new ScaleModel();
             scale.id = widget.scale.id;
@@ -61,8 +81,10 @@ class _UpdateDataState extends State<UpdateData> {
             await db.updateData(scale);
             Navigator.pop(context);
           }else{
+            error_txt = "Should not be empty";
             print('Enter all Fields');
           }
+          setState(() { });
         },
         child: Text('Update')
     );
@@ -88,6 +110,7 @@ class _UpdateDataState extends State<UpdateData> {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Name',
+        errorText: (error_name)? error_txt: null,
       ),
     );
 
@@ -113,6 +136,7 @@ class _UpdateDataState extends State<UpdateData> {
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Comment',
+        errorText: (error_comment)? error_txt: null,
       ),
     );
 

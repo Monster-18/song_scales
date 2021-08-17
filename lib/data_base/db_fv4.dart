@@ -29,20 +29,26 @@ class DBFv4{
         version: 1,
         onCreate: (db, version){
           db.execute(
-              'CREATE TABLE Fv4(id number, name varchar2(50), scale varchar2(20), comments varchar2(60))'
+              'CREATE TABLE Fv4(id number PRIMARY KEY, name varchar2(50), scale varchar2(20), comments varchar2(60))'
           );
         }
     );
   }
 
   //Insert a data
-  Future<int> insertData(ScaleModel scale) async{
+  Future<bool> insertData(ScaleModel scale) async{
     Database db = await instance.database;
 
-    await db.execute(
-        'INSERT INTO Fv4 VALUES(?, ?, ?, ?)',
-        [scale.id, scale.name, scale.scale, scale.comments]
-    );
+    try{
+      await db.execute(
+          'INSERT INTO Fv4 VALUES(?, ?, ?, ?)',
+          [scale.id, scale.name, scale.scale, scale.comments]
+      );
+      return true;
+    }catch(e){
+      print(e);
+      return false;
+    }
 
   }
 
