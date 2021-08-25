@@ -33,18 +33,18 @@ class _ButtonState extends State<Button> {
         width: (MediaQuery.of(context).size.width > 700)? 300: 150,
         height: (MediaQuery.of(context).size.width > 700)? 300: 150,
         decoration: BoxDecoration(
-            color: Colors.blue,
+            // color: Colors.black45,
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
             // border: Border.all(color: Colors.black, width: 1.0, style: BorderStyle.solid),
             boxShadow: [
               //Background Shadow
               BoxShadow(
-                offset: (onPressed)? Offset(0.0, 0.0): Offset(3.0, 3.0),
+                offset: Offset(3.0, 3.0),
                 color: Colors.blueGrey,
               ),
               BoxShadow(
                   offset: (onPressed)? Offset(3.0, 3.0): Offset(0.0, 0.0),
-                  color: Colors.white
+                  color: Colors.black38
               )
             ]
         ),

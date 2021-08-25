@@ -25,7 +25,7 @@ class _KeerthanaiState extends State<Keerthanai> {
   Widget build(BuildContext context) {
     return Song(
       db: keerthanai,
-      title: 'Keerthanai',
+      title: 'Lyrics',
     );
   }
 }

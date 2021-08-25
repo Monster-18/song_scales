@@ -62,7 +62,7 @@ class _CardsState extends State<Cards> {
         child: Text(
           'Cancel',
           style: TextStyle(
-              color: Colors.blue
+              // color: Colors.blue
           ),
         )
     );
@@ -109,7 +109,8 @@ class _CardsState extends State<Cards> {
         text,
         style: TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.bold
+            fontWeight: FontWeight.bold,
+            color: Colors.black
         ),
       ),
     );
@@ -123,7 +124,7 @@ class _CardsState extends State<Cards> {
         text,
         style: TextStyle(
             fontSize: (show)? 14: 16,
-            color: (isScale)? Colors.deepPurple: Colors.black
+            color: (isScale)? Colors.tealAccent: Colors.white
         ),
       ),
     );
@@ -135,6 +136,7 @@ class _CardsState extends State<Cards> {
       return Container(
         height: 60,
         child: Card(
+          color: Colors.white70,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -181,14 +183,14 @@ class _CardsState extends State<Cards> {
           setState(() {
             show = true;
           });
-          timer = new Timer(Duration(seconds: 10), (){
+          timer = new Timer(Duration(seconds: 5), (){
             setState(() {
               show = false;
             });
           });
         },
         child: Card(
-          color: (show)? Colors.yellow: Colors.white,
+          // color: (show)? Colors.yellow: Colors.white,
           child: Padding(
             padding: (show)? EdgeInsets.all(1.0): const EdgeInsets.all(8.0),
             child: Row(

@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     });
 
-    _start = new Timer(Duration(seconds: 2), (){
+    _start = new Timer(Duration(seconds: 1), (){
       Navigator.pushReplacementNamed(context, '/home');
     });
 
@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
       color: Colors.white,
       child: Center(
         child: AnimatedContainer(
-          duration: Duration(milliseconds: 2500),
+          duration: Duration(milliseconds: 1500),
           width: (start)? 300: 10,
           height: (start)? 300: 10,
           curve: Curves.easeIn,

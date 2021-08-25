@@ -34,13 +34,13 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Button(
-                    title: 'Pamalai',
+                    title: 'Hymns',
                     callback: (){
                       Navigator.pushNamed(context, '/pamalai');
                     },
                   ),
                   Button(
-                    title: 'Keerthanai',
+                    title: 'Lyrics',
                     callback: (){
                       Navigator.pushNamed(context, '/keerthanai');
                     },

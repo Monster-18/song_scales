@@ -25,7 +25,7 @@ class _PamalaiState extends State<Pamalai> {
   Widget build(BuildContext context) {
     return Song(
       db: pamalai,
-      title: 'Pamalai',
+      title: 'Hymns',
     );
   }
 }

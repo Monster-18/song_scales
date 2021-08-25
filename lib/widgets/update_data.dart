@@ -86,7 +86,12 @@ class _UpdateDataState extends State<UpdateData> {
           }
           setState(() { });
         },
-        child: Text('Update')
+        child: Text(
+            'Update',
+          style: TextStyle(
+            color: Colors.tealAccent
+          ),
+        )
     );
 
     FlatButton cancelButton = new FlatButton(

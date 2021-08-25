@@ -17,9 +17,10 @@ void main() {
   runApp(
     MaterialApp(
       title: 'Song Scales',
-      theme: ThemeData(
-        primarySwatch: Colors.blue
-      ),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      // ),
+      theme: ThemeData.dark(),
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
